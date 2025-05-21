@@ -1,0 +1,44 @@
+class AuthService {
+  constructor(apiUrl) {
+    this.apiUrl = apiUrl; // Пример: 'https://example.com/api'
+  }
+
+  async login(username, password) {
+    try {
+      const response = await fetch(`${this.apiUrl}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Невалидни данни за вход');
+      }
+
+      const data = await response.json();
+
+      // Запазваме токена в localStorage (или друг метод според нуждите)
+      localStorage.setItem('token', data.token);
+
+      return data;
+    } catch (error) {
+      console.error('Грешка при вход:', error.message);
+      throw error;
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    // Допълнително можеш да направиш и POST заявка към /logout ако сървърът го изисква
+  }
+
+  isAuthenticated() {
+    return !!localStorage.getItem('token');
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+}
