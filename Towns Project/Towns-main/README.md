@@ -4,4 +4,4 @@
 
 · LuckyKaloyan takes the role "Shuffler"
 
-· {Name3} takes the role "Styler"
+· Trif takes the role "Styler"
